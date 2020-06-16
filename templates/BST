@@ -1,0 +1,170 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct node{
+
+    int data;
+    node* left;
+    node* right;
+    node* parent;
+};
+
+node* root=NULL;
+
+node* newnode(int key)
+{
+    node* temp= new node();
+    temp->data=key;
+    temp->right=NULL;
+    temp->left=NULL;
+
+    return temp;
+}
+
+void tree_insert(int key)
+{
+    node* tempNode= newnode(key);//node to be inserted is created
+    node* parentNode=NULL;//track parent
+    node* currentNode=root;//always start from root
+
+    while(currentNode!=NULL)//till we find an empty space to insert
+    {
+        parentNode=currentNode;//maintain parent
+
+        if(tempNode->data < currentNode->data)
+            currentNode=currentNode->left;
+        else
+            currentNode=currentNode->right;
+    }
+
+    tempNode->parent=parentNode;//inserted node er parent thikh korlam
+
+    if(parentNode==NULL)//empty tree
+        root=tempNode;
+    else if(tempNode->data < parentNode->data)
+        parentNode->left=tempNode;
+    else
+        parentNode->right=tempNode;
+
+}
+
+void inorder_tree_walk(node* x)
+{
+    if(x==NULL)
+        return;
+
+    inorder_tree_walk(x->left);
+    cout<< x->data <<" ";
+    inorder_tree_walk(x->right);
+}
+
+node* tree_search(int key)//doesn't check for nonexistent nodes
+{
+    node* currentNode=root;
+
+    while(currentNode!=NULL && key!=currentNode->data)
+    {
+        if(key < currentNode->data)
+            currentNode=currentNode->left;
+        else
+            currentNode=currentNode->right;
+    }
+
+    return  currentNode;
+}
+
+node* tree_maximum(node* currentNode)
+{
+
+    while(currentNode->right != NULL)
+        currentNode=currentNode->right;
+
+    //cout<<"\n"<<"maximum key is "<<currentNode->data;
+    return currentNode;
+}
+
+node* tree_minimum(node* currentNode)
+{
+
+    while(currentNode->left != NULL)
+        currentNode=currentNode->left;
+
+    //cout<<"\n"<<"minimum key is "<<currentNode->data;
+
+    return currentNode;
+}
+
+node* tree_successor(int key)
+{
+    node* currentNode=tree_search(key);
+
+    if(currentNode->right!=NULL)
+        return tree_minimum(currentNode->right);
+
+    node* parentNode=currentNode->parent;
+
+    while(parentNode!=NULL && parentNode->right==currentNode)
+    {
+        currentNode=parentNode;
+        parentNode=parentNode->parent;
+    }
+
+    return parentNode;
+}
+
+node* tree_predecessor(int key)
+{
+    node* currentNode=tree_search(key);
+
+    if(currentNode->left!=NULL)
+        return tree_maximum(currentNode->left);
+
+    node* parentNode=currentNode->parent;
+
+    while(parentNode!=NULL && parentNode->left==currentNode)
+    {
+        currentNode=parentNode;
+        parentNode=parentNode->parent;
+    }
+
+    return parentNode;
+}
+
+void transplant(node* u, node* v)
+{
+    if(u->parent==NULL)//u is root
+        root=v;
+    else if(u==u->parent->left)
+        u->parent->left=v;
+    else
+        u->parent->right=v;
+
+    if(v!=NULL)
+        v->parent=u->parent;
+}
+
+void tree_delete(int key)
+{
+    node* node_delete=tree_search(key);//which node to be deleted
+
+    if(node_delete->left==NULL)
+        transplant(node_delete,node_delete->right);
+    else if(node_delete->right==NULL)
+        transplant(node_delete,node_delete->left);
+    else
+    {
+        node* y=tree_minimum(node_delete->right);
+
+        if(y->parent!=node_delete) //node y is not node_delete's right child
+        {
+            transplant(y,y->right);// x ar y odolbodol
+            y->right=node_delete->right;//r ke korlam y er right child
+            y->right->parent=y;
+        }
+
+        transplant(node_delete,y);
+        y->left=node_delete->left;
+        y->left->parent=y;
+    }
+}
+

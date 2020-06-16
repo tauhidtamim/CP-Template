@@ -1,0 +1,55 @@
+struct node{
+
+    int at;
+    ll cost;
+    node(int _at, ll _cost){
+
+        at=_at;
+        cost=_cost;
+    }
+};
+
+bool operator<(node A, node B){
+
+    return A.cost > B.cost;
+}
+
+struct edge{
+    int v;
+    ll weight;
+
+    edge(int _v, int _w)
+    {
+        v=_v;
+        weight=_w;
+    }
+};
+
+void dijkstra(int s)
+{
+    for(int i=1;i<=n;i++)
+        d[i]=inf;
+
+    d[s]=0;
+    pq.push(node(s,0));
+    to[s]=s;
+
+    while(!pq.empty())
+    {
+        node u=pq.top();
+        pq.pop();
+
+        if(u.cost!=d[u.at])
+                continue;
+
+        for(edge e: adj[u.at])
+        {
+            if(d[e.v] > u.cost + e.weight)
+            {
+                d[e.v] = u.cost + e.weight;
+                pq.push(node(e.v,d[e.v]));
+                to[e.v] = u.at;
+            }
+        }
+    }
+}

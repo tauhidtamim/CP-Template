@@ -1,0 +1,14 @@
+bool check(int n)
+{
+ 
+    if(n<=3)return false;
+ 
+ 
+    if(n%2==0 or n%3==0) return true;
+ 
+    for (int i=5;i*i<=n;i=i+6)
+        if (n%i==0 or n%(i+2)==0)
+           return true;
+ 
+    return false;
+}

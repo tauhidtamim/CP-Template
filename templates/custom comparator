@@ -1,0 +1,30 @@
+struct node{
+
+    int range;
+    int left;
+    int right;
+
+    node(int ra,int l, int r){
+        range=ra;
+        left=l;
+        right=r;
+    }
+
+};
+
+struct cmp{
+
+    bool operator()(node const& n1, node const& n2){
+
+        if(n1.range==n2.range)
+            return n1.left>n2.left;
+        return n1.range<n2.range;
+
+    }
+
+};
+
+priority_queue<node,vector<node>,cmp>pq;
+
+Note that the Compare parameter is defined such that it returns true if its first argument comes before its second argument in a weak ordering. 
+But because the priority queue outputs largest elements first, the elements that "come before" are actually output last. That is, the front of the queue contains the "last" element according to the weak ordering imposed by Compare.

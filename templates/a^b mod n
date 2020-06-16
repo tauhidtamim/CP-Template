@@ -1,0 +1,57 @@
+ll mulmod(ll a, ll b, ll mod)
+{
+    ll res=0;
+    a= a%mod;
+
+    while(b>0)
+    {
+        if(b%2==1)
+            res= (res+a) % mod;
+        a= (a*2)%mod;
+        b/=2;
+    }
+
+    return res%mod;
+}
+
+ll bigmod(ll a,ll b, ll mod)
+{
+    if(b==0)
+        return 1%mod;
+
+    ll x = bigmod(a,b/2,mod);
+    x= mulmod(x,x,mod) % mod;
+
+    if(b%2)
+        x=mulmod(x,a,mod)%mod;
+
+    return x;
+}
+
+-------------------------------------------------
+O(log b)
+ll power(int a, int b, int mod)
+{
+	ll res=1;
+	a=a%mod;
+
+	while(b>0){
+		if(b%2)
+		   res=(res*a)%mod;
+		b=b/2;
+		a=(a*a)%mod;
+	}
+} 
+
+
+
+
+
+
+
+
+
+	return res;
+}
+
+

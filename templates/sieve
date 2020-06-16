@@ -1,0 +1,19 @@
+#sieving till root ->
+
+int n;
+vector<char> is_prime(n+1, true);
+is_prime[0] = is_prime[1] = false;
+
+for(int i=4;i<=n;i+=2){
+		is_prime[i]=false;
+}
+
+for (int i = 3; i * i <= n; i+=2) {
+    if (is_prime[i]) {
+        for (int j = i * i; j <= n; j += i)
+            is_prime[j] = false;
+    }
+}
+
+https://math.stackexchange.com/questions/58799/why-in-sieve-of-erastothenes-of-n-number-you-need-to-check-and-cross-out-numbe
+https://stackoverflow.com/questions/5811151/why-do-we-check-up-to-the-square-root-of-a-prime-number-to-determine-if-it-is-pr

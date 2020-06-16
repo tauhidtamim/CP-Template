@@ -1,0 +1,17 @@
+long long fast_expo(long long base, long long exp)
+{
+	if(exp==0)
+	    return 1;
+	
+	if(exp==1)
+	    return base%inf;
+
+	long long t=fast_expo(base,exp/2);
+	
+	t=(t*t) % inf;
+	
+	if(exp%2==0)
+		return t;
+	else
+		return ((base % inf)*t)	% inf;
+}

@@ -1,0 +1,15 @@
+int sq = sqrt(n);
+vector<int>divisor;
+
+for(int i=1;i<=sq;i++){
+     if(n%i==0){
+	if(n/i==i)
+		divisor.pb(i);
+	else{
+		divisor.pb(i);
+		divisor.pb(n/i);
+	}
+     }
+}
+
+O(sqrt(n))

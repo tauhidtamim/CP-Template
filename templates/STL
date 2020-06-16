@@ -1,0 +1,15 @@
+#set:lower_bound:
+Iterator pointing to the first element that is not less than key.
+If no such element is found, a past-the-end iterator is returned.
+O(logarithmic)
+
+#set:upper_bound:
+Iterator pointing to the first element that is greater than key.
+If no such element is found, past-the-end (see end()) iterator is returned.
+O(logarithmic)
+
+#std::find :
+Returns an iterator to the first element in the range [first,last) that compares 
+equal to val. 
+If no such element is found, the function returns last.
+O(linear)

@@ -1,0 +1,9 @@
+class SRM{
+   public:
+	int method(paramter);
+};
+
+int SRM::method(methodsign){
+
+
+}

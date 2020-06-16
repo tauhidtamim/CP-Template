@@ -1,0 +1,21 @@
+void pf(int n)
+{
+	
+	while(n%2==0)
+	{
+		cout<<2<<endl;
+		n/=2;
+	}	
+
+	int sq=sqrt(n);
+
+	for(int i=3;i<=sq;i+=2)
+	{
+		while(n%i==0){
+			cout<<i<<endl;
+			n/=i;
+		}
+
+	}
+
+}

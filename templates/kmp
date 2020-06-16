@@ -1,0 +1,49 @@
+vector<int>prefixFunction(string s){
+
+    int n=s.length();
+    vector<int>lps(n);
+    int i=0;
+    lps[i]=0;
+    for(int j=1;j<n;){
+        if(s[i]==s[j]){
+            lps[j]=i+1;
+            i++,j++;
+        }else{
+            if(i!=0)i=lps[i-1];
+            else lps[j]=i,j++;
+        }
+
+    }
+
+    return lps;
+}
+
+
+void kmp(string text, string pattern){
+
+    bool found=0;
+    vector<int>prefix=prefixFunction(pattern);
+    int i=0, j=0;//i->text and j->pattern
+    int tlen=text.length(), plen=pattern.length();
+
+    while(i<tlen){
+        if(text[i]==pattern[j]){
+            i++,j++;
+        }else{
+            if(j!=0)j=prefix[j-1];
+            else i++;
+        }
+
+        if(j==plen){
+            cout<<"found\n";
+            found=1;
+            cout<<"index: "<<i-plen<<"\n";
+            j=prefix[j-1];
+        }
+    }
+
+
+    if(!found)
+        cout<<"not found\n";
+
+}

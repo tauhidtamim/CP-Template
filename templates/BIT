@@ -1,0 +1,84 @@
+#1: POINT UPDATE AND RANGE QUERY:
+
+struct BIT
+{
+	int n;
+	vector<int>bit;
+
+	void init(int _n){
+		n=_n;
+		bit.assign(n+1,0);
+	}
+	
+	void update(int idx, int val){
+
+		while(idx<=n){
+
+			bit[idx]+=val;
+			idx+= idx & (-idx);
+
+		}
+	}
+
+	int query(int idx){
+
+		int sum=0;
+		while(idx>0){
+
+			sum+=bit[idx];
+			idx-= idx & (-idx);
+
+		}
+
+		return sum;
+	}
+
+	int sum_range(int l, int r){
+
+		return query(r)-query(l-1);
+	}
+
+
+} bit;
+
+
+#2: RANGE UPDATE AND POINT QUERY: 
+
+
+//WE DON'T STORE ORIGINAL ELEMENTS IN BIT HERE, JUST THE UPDATES
+
+int bit[nmax];
+int n;
+vector<int>v; //ORIGINAL ELEMENTS
+
+void update(int idx, int val){
+
+	while(idx<=n){
+
+		bit[idx]+=val;
+		idx+= idx & (-idx);
+	}
+
+}
+
+void update_range(int l, int r, int val){
+
+	update(l,val);
+	update(r+1,-val);
+}
+
+int query(int idx){
+
+	int sum=0;
+	int i=idx;
+	while(idx>0){
+
+		sum+=bit[idx];
+		idx-= idx & (-idx);
+	}
+
+	return sum+v[i];
+
+}
+
+

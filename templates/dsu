@@ -1,0 +1,109 @@
+without struct:
+
+int connected;
+int parent[n], sz[n];
+
+void init()
+{
+	for(int i=1;i<=n;i++)
+	{
+		parent[i]=i;
+		sz[i]=1;
+	}
+
+	connected=n;
+}
+
+int find_rep(int k)
+{
+	while(k!=parent[k])
+	{
+		parent[k]=parent[parent[k]];
+		k=parent[k];
+	}
+
+	return k;
+}
+
+void Merge(int u,int v)
+{
+	int rep1=find_rep(u);
+	int rep2=find_rep(v);
+
+	if(rep1==rep2)
+		return;
+
+	connected--;
+
+	//rep2 boro
+
+	if(sz[rep1]>sz[rep2])
+			swap(rep1,rep2);
+
+	sz[rep2]+=sz[rep1];
+	sz[rep1]=0;
+	parent[rep1]=parent[rep2];
+}
+
+/////////////////////////////////////////
+
+
+struct:
+
+struct DSU
+{
+
+	int connected;
+	int parent[n],sz[n];
+
+	DSU(){}
+
+	DSU(int n)
+	{
+		for(int i=1;i<=n;i++)
+		{
+			parent[i]=i;
+			sz[i]=1;
+		}
+
+		connected=n;
+	}
+
+	int find_rep(int k)
+	{
+		while(k!=parent[k])
+		{
+			parent[k]=parent[parent[k]];
+			k=parent[k];
+		}
+
+		return k;
+	}
+
+	int getSize(int k)
+	{
+		return sz[find_rep(k)];
+	}	
+
+	void Merge(int u,int v)
+	{
+		int rep1=find_rep(u);
+		int rep2=find_rep(v);
+
+		if(rep1==rep2)
+			return;
+
+		connected--;
+
+		//rep2 boro
+
+		if(sz[rep1]>sz[rep2])
+			swap(rep1,rep2);
+
+		sz[rep2]+=sz[rep1];
+		sz[rep1]=0;
+		parent[rep1]=parent[rep2];
+	}
+
+};
+

@@ -1,0 +1,15 @@
+int idx=0;
+int temp=num[idx]- '0';
+
+while(temp<divisor)
+	temp=temp*10 + (num[++idx]-'0');
+
+int c=0;
+while(num.size()>idx){
+	ans.pb(temp%divisor);
+	temp=(temp%divisor)*10 + num[++idx];
+}
+
+if(ans.length()==0)
+	return 0;
+return ans;	 

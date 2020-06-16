@@ -1,0 +1,68 @@
+long long ncr(long long n, long long r)
+{
+    long long res=1;
+ 
+    if(r>(n-r))
+        r=n-r;
+ 
+    for(int i=0;i<r;i++)
+    {
+        res=res*(n-i);
+        res=res/(i+1);
+    }
+ 
+    return res;
+}
+
+------------------------------------------------------
+
+//always use long long
+
+ll iv[20000];
+
+ll nck(int n, int k){
+	ll ans=1;
+	for(int i=1;i<=k;i++)
+	    ans=ans*(n-i+1)%mod*iv[i]%mod;
+	return ans;
+}
+
+iv[1]=1;
+for(int i=2;i<=1000000;i++)
+    	iv[i]=(mod-((mod/i)*iv[mod%i])%mod)%mod;
+
+-------------------------------------------------------
+
+ll power(ll a, ll b, int mod)
+{
+	ll res=1;
+	a=a%mod;
+
+	while(b>0){
+		if(b%2)
+		   res=(res*a)%mod;
+		b=b/2;
+		a=(a*a)%mod;
+	}
+
+	return res;
+}
+
+ll modInverse(ll n, int mod){
+	return power(n,mod-2,mod);
+}
+
+ll fac[n];
+fac[0]=1;
+for(int i=1;i<=n;i++)
+	fac[i]=(fac[i-1]*i)%mod;
+
+ll ans=(fac[n]*modInverse(fac[r],mod)%mod*modInverse(fac[n-r],mod)%mod)%mod	
+
+
+
+
+
+
+
+
